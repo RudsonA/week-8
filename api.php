@@ -3,11 +3,9 @@ header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Headers: "origin, x-requested-with, content-type"');
 header('Access-Control-Allow-Methods "GET, POST, OPTIONS"');
 
-$text = $_POST['text']
-if (isset($text) && !empty($text) ) {
-    echo "<script> alert('Hello!') </script>";
-} else {
-    echo "<script> alert('Nope!') </script>";
-}
+$r = (isset($_POST['text'])) ? $_POST['text'] : 'no r';
+$computedString = "Hi, " . $r . "!";
+$array = ['text' => $r, 'computedString' => $computedString];
+echo json_encode($array);
 
 ?>
