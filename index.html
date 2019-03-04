@@ -1,6 +1,54 @@
-
+<!-- 
 <form action="https://cbc-5-ncsa.appspot.com/" method="post">
     <input type="text" name="text" id="randomText">
     <input type="submit" value="Test Api">
-</form>
+</form> -->
 
+<label> Random Test: 
+  <input type="text" name="text" id="text">
+</label>
+<span id="textButton" style="cursor: pointer; text-decoration: underline">
+  Running Test
+</span>
+
+<script>
+    (function() {
+
+      let httpRequest;
+
+      document.getElementById("textButton").onclick = function() {
+      //  r = randomness
+      let r = document.getElementById('textButton').value; 
+      console.log(r);
+      makeRequest('https://cbc-5-ncsa.appspot.com/', r); 
+      };
+
+      function makeRequest(url, r) {
+        httpRequest = new XMLHttpRequest();
+
+        if (!httpRequest) {
+          alert("Random failure");
+          return false;
+        }
+
+        httpRequest.onreadystatechange = alertContents;
+        httpRequest.open('POST', url);
+        httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+              httpRequest.send('r=' + encodeURIComponent(r));
+      }
+
+      function alertContents() {
+              if (httpRequest.readyState === XMLHttpRequest.DONE) {
+                  if (httpRequest.status === 200) {
+                      let response = JSON.parse(httpRequest.responseText);
+                      alert(response.computedString);
+                  } else {
+                      alert('There was a problem with the request');
+                  }
+              }
+          }
+          
+    })();
+    
+
+</script>
