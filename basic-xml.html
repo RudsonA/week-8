@@ -1,0 +1,45 @@
+
+<label> Your name:
+    <input type="text" id="ajaxTextbox">
+</label>
+<span id="ajaxButton" style="cursor: pointer; text-decoration: underline">
+    Make a request
+</span>
+
+<script>
+    (function() {
+        
+        let httpRequest;
+
+        document.getElementById("ajaxButton").onclick = function() {
+            let username = document.getElementById("ajaxTextbox").nodeValue;
+            makeRequest('https://theclubhouse-223021.appspot.com/', username);
+        };
+
+        function makeRequest(url, username) {
+            httpRequest = new XMLHttpRequest();
+
+            if (!httpRequest) {
+                alert("Giving up"); 
+                return false; 
+            }
+            httpRequest.onreadystatechange = alertContents;
+            httpRequest.open('POST', url);
+            httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            httpRequest.send('username=' + encodeURIComponent(username)); 
+        } 
+
+        function alertContents() {
+            if (httpRequest.readyState === XMLHttpRequest.DONE) {
+                if (httpRequest.status === 200) {
+                    let response = JSON.parse(httpRequest.responseTEXT);
+                    alert(respo.computedString);
+                } else {
+                    alert('There was a problem with the request');
+                }
+            }
+        }
+    }
+
+    ) (); 
+</script>
